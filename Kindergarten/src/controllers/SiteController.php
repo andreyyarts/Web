@@ -124,11 +124,11 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function actionChildren()
+    /*public function actionChildren()
     {
         $model = new ChildrenForm();
         return $this->render('children', [
             'model' => $model,
         ]);
-    }
+    }*/
 }
