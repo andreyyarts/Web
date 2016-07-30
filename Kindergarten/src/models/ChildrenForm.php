@@ -9,15 +9,21 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\Query;
 
 class ChildrenForm extends Model
 {
     function getGridData()
     {
         return new ActiveDataProvider([
-            'query' => Child::find()->orderBy('fio'),
+            'query' => Child::getQuery(),
+            'key' => 'id',
             'pagination' => [
                 'pageSize' => 20,
+                
+            ],
+            'sort' => [
+                'attributes' => [ 'id', 'full_name', 'birthday', 'sex' ],
             ],
         ]);
     }

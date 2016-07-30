@@ -2,12 +2,19 @@
 
 namespace app\models;
 
-use yii\db\ActiveRecord;
+use yii\base\Object;
+use yii\db\Query;
 use yii\web\IdentityInterface;
 
-class User extends ActiveRecord implements IdentityInterface
+class User extends Object implements IdentityInterface
 {
-    public static function tableName()
+    public $id;
+    public $name;
+    public $password;
+    public $auth_key;
+    public $access_token;
+
+    private static function tableName()
     {
         return 'user';
     }
@@ -20,7 +27,8 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne($id);
+        $identity = self::getQuery()->where(['id' => $id])->limit(1)->one();
+        return new static($identity);
     }
 
     /**
@@ -31,7 +39,19 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::findOne(['access_token' => $token]);
+        return new static(self::getQuery()->where(['access_token' => $token])->limit(1)->one());
+    }
+
+    /**
+     * Finds user by username
+     *
+     * @param string $username
+     * @return static|null
+     */
+    public static function findByUsername($username)
+    {
+        $user = self::getQuery()->where(['name' => $username])->limit(1)->one();
+        return new static($user);
     }
 
     /**
@@ -60,24 +80,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        return static::findOne(['name' => $username]);
-        /*foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;*/
-    }
-
-    /**
      * Validates password
      *
      * @param string $password password to validate
@@ -86,5 +88,12 @@ class User extends ActiveRecord implements IdentityInterface
     public function validatePassword($password)
     {
         return $this->password === $password;
+    }
+
+    private static function getQuery()
+    {
+        return (new Query())
+            ->select(['id', 'name', 'password', 'auth_key', 'access_token'])
+            ->from(self::tableName());
     }
 }

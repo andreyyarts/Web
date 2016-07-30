@@ -7,6 +7,8 @@
  */
 namespace app\controllers;
 
+use Yii;
+use app\models\ChildForm;
 use app\models\ChildrenForm;
 use yii\web\Controller;
 
@@ -16,6 +18,15 @@ class ChildrenController extends Controller
     {
         $model = new ChildrenForm();
         return $this->render('index', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionView()
+    {
+        $get = Yii::$app->request->get();
+        $model = new ChildForm($get['id']);
+        return $this->render('view', [
             'model' => $model,
         ]);
     }

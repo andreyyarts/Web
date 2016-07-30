@@ -4,6 +4,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 $this->title = 'Дети';
 $this->params['breadcrumbs'][] = $this->title;
@@ -13,20 +14,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-       <?php echo GridView::widget([
+        <?php Pjax::begin(); ?>
+        <?= GridView::widget([
         'dataProvider' => $model->getGridData(),
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
-                'attribute' => 'fio',
+                'attribute' => 'full_name',
                 'label' => 'ФИО',
-                'format' => 'url',
-                /*'value' => function ($data) {
-                    return $data->fio;
-                },*/
-                //'enableSorting' => true,
-                //'encodeLabel' => true,
-                //'value' => 'fio'
+                'format' => 'text',
+                'enableSorting' => true
             ],
             [
                 'attribute' => 'birthday',
@@ -41,16 +38,28 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 //'attribute' => 'birthday',
                 'label' => 'Возраст',
-                'value' => function ($model, $key, $index, $column) {
-                    return  Yii::$app->formatter->asDate('now', 'yy') -  Yii::$app->formatter->asDate($model->birthday, 'yy');
+                'value' => function ($data) {
+                    return  Yii::$app->formatter->asDate('now', 'yy')
+                        -  Yii::$app->formatter->asDate($data['birthday'], 'yy');
                 }
             ],
-            /*[
-                'value' => 'fio',
-                'header' => 'ФИО'
-            ],*/
+            [
+                'attribute' => 'note',
+                'label' => 'Примечание',
+                'format' => 'text',
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view}',
+                /*'buttons' => [
+                    'edit' => function ($url, $model, $key) {
+                        return Html::a('edit', ['children/edit', 'id'=>$key]);
+                    },
+                ],*/
+            ],
         ],
         ]); ?>
+        <?php Pjax::end(); ?>
     </p>
 
 </div>

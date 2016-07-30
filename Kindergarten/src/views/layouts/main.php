@@ -27,7 +27,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => Yii::t('app', 'My Company'),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -35,27 +35,32 @@ AppAsset::register($this);
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
+        'activateParents' => true,
         'items' => Yii::$app->user->isGuest
-        ? [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label' => 'Login', 'url' => ['/site/login']]
-        ]
-        : [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'Дети', 'url' => ['/children/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-            '<li>'
-            . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->name . ')',
-                ['class' => 'btn btn-link']
-            )
-            . Html::endForm()
-            . '</li>'
-        ],
+            ? [
+                ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
+                ['label' => 'About', 'url' => ['/site/about']],
+                ['label' => 'Contact', 'url' => ['/site/contact']],
+                ['label' => 'Login', 'url' => ['/site/login']]
+            ]
+            : [
+                ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
+                ['label' => 'Дети', 'url' => ['/children/index'],
+                    /*'items' => [
+                        ['label' => 'Ребенок', 'url' => ['/children/view']],
+                    ]*/
+                ],
+                ['label' => 'About', 'url' => ['/site/about']],
+                ['label' => 'Contact', 'url' => ['/site/contact']],
+                '<li>'
+                . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
+                . Html::submitButton(
+                    'Logout (' . Yii::$app->user->identity->name . ')',
+                    ['class' => 'btn btn-link']
+                )
+                . Html::endForm()
+                . '</li>'
+            ],
     ]);
     NavBar::end();
     ?>
@@ -64,9 +69,7 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= $content /*!Yii::$app->user->isGuest
-                ? $content
-                : 'Доступ ограничен!<br/>Необходимо авторизоваться!'*/ ?>
+        <?= $content ?>
     </div>
 </div>
 
