@@ -13,7 +13,6 @@ class ChildForm extends Model
 {
     public $id;
     public $last_name;
-    public $lastName;
     public $first_name;
     public $middle_name;
     public $sex;
@@ -28,11 +27,24 @@ class ChildForm extends Model
      * ChildForm constructor.
      * @param $id
      */
-    public function __construct($id)
+    /*public function __construct($id)
     {
         $childFields = Child::loadById($id);
         $this->setAttributes($childFields, false);
         $array = $this->toArray();
+    }*/
+    /*
+     * @param $id
+     */
+    public function loadData($id)
+    {
+        $childFields = Child::loadById($id);
+        $this->setAttributes($childFields);
+    }
+    
+    public function safeAttributes()
+    {
+        return $this->attributes();
     }
 
     public function fields()
@@ -50,6 +62,12 @@ class ChildForm extends Model
             'outletDate' => 'outlet_date',
             'note',
         ];
+    }
+
+    public function save()
+    {
+        (new Child())->save($this);
+        return true;
     }
 
     /**

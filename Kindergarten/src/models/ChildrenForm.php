@@ -13,7 +13,7 @@ use yii\db\Query;
 
 class ChildrenForm extends Model
 {
-    function getGridData()
+    public function getGridData()
     {
         return new ActiveDataProvider([
             'query' => Child::getQuery(),

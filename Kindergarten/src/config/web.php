@@ -52,7 +52,9 @@ $config = [
         ],
         'formatter' => [
             'locale' => 'ru_RU@calendar=persian',
+            //'calendar' => \IntlDateFormatter::TRADITIONAL,
             'dateFormat' => 'dd.MM.yyyy',
+            'datetimeFormat' => 'dd.MM.yyyy HH:mm:ss',
             'decimalSeparator' => '.',
             'thousandSeparator' => ' ',
             'currencyCode' => 'RUB',

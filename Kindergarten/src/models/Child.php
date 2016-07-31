@@ -36,6 +36,11 @@ class Child extends Object
         return $child;
     }
 
+    public function save($child)
+    {
+        (new Query())->createCommand()->update(self::tableName(), $child, "id = $child[id]")->execute();
+    }
+
     public static function getQuery()
     {
         return (new Query())
