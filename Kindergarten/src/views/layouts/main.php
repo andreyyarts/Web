@@ -45,9 +45,9 @@ AppAsset::register($this);
             ]
             : [
                 ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
-                ['label' => 'Дети', 'url' => ['/children/index'],
+                ['label' => 'Дети', 'url' => ['/child/index'],
                     /*'items' => [
-                        ['label' => 'Ребенок', 'url' => ['/children/view']],
+                        ['label' => 'Ребенок', 'url' => ['/child/view']],
                     ]*/
                 ],
                 ['label' => 'About', 'url' => ['/site/about']],

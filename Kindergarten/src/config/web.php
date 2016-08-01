@@ -47,7 +47,13 @@ $config = [
             'enableStrictParsing' => false,
             'suffix' => '.html',
             'rules' => [
+                'children' => 'child/index',
+                '<controller:[\w-]+>s' => '<controller>/index',
 
+                'child/edit/<id:\d+>' => 'child/edit',
+                'PUT <controller:[\w-]+>/<id:\d+>'    => '<controller>/edit',
+                'DELETE <controller:[\w-]+>/<id:\d+>' => '<controller>/delete',
+                '<controller:[\w-]+>/<id:\d+>'        => '<controller>/view',
             ],
         ],
         'formatter' => [

@@ -66,8 +66,8 @@ class ChildForm extends Model
 
     public function save()
     {
-        (new Child())->save($this);
-        return true;
+        $child = (new Child())->save($this);
+        return $child;
     }
 
     /**

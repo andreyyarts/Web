@@ -7,6 +7,7 @@
  */
 namespace app\models;
 
+use yii;
 use yii\base\Object;
 use yii\db\Query;
 
@@ -30,6 +31,10 @@ class Child extends Object
         return 'child';
     }
 
+    /**
+     * @param $id
+     * @return array|bool
+     */
     public static function loadById($id)
     {
         $child = self::getQuery()->where(['id' => $id])->limit(1)->one();
@@ -38,7 +43,13 @@ class Child extends Object
 
     public function save($child)
     {
-        (new Query())->createCommand()->update(self::tableName(), $child, "id = $child[id]")->execute();
+        $tableName = self::tableName();
+        if (isset($child['id'])) {
+            return (new Query())->createCommand()->update($tableName, $child, "id = $child[id]")->execute();
+        } else {
+            (new Query())->createCommand()->insert($tableName, $child)->execute();
+            return Yii::$app->db->getLastInsertID();
+        }
     }
 
     public static function getQuery()

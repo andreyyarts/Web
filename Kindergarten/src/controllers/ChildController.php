@@ -7,13 +7,12 @@
  */
 namespace app\controllers;
 
-use app\models\Child;
-use Yii;
+use yii;
 use app\models\ChildForm;
 use app\models\ChildrenForm;
 use yii\web\Controller;
 
-class ChildrenController extends Controller
+class ChildController extends Controller
 {
     const EDIT_CHILD = 'editChild';
 
@@ -25,12 +24,12 @@ class ChildrenController extends Controller
         ]);
     }
 
-    public function actionView()
+    public function actionView($id)
     {
         Yii::$app->session->removeFlash(self::EDIT_CHILD);
         $model = new ChildForm();
-        $get = Yii::$app->request->get();
-        $model->loadData($get['id']);
+        $getId = Yii::$app->request->get('id', $id);
+        $model->loadData($getId);
 
         return $this->render('view', [
             'model' => $model,
@@ -41,12 +40,16 @@ class ChildrenController extends Controller
     {
         $get = Yii::$app->request->get();
         $model = new ChildForm();
-        $model->id = $get['id'];
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->actionView();
+        if (isset($get['id'])) {
+            $model->id = $get['id'];
+        }
+        if ($model->load(Yii::$app->request->post()) && ($childId = $model->save()) > 0) {
+            return $this->actionView($childId);
         }
 
-        $model->loadData($get['id']);
+        if (isset($get['id'])) {
+            $model->loadData($get['id']);
+        }
         Yii::$app->session->setFlash(self::EDIT_CHILD);
         return $this->render('view', [
             'model' => $model,

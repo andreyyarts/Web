@@ -14,6 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="children_index">
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <?= Html::a('Добавить', ['child/edit']); ?>
+
     <p>
         <?php Pjax::begin(); ?>
         <?= GridView::widget([
@@ -37,7 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'text',
             ],
             [
-                //'attribute' => 'birthday',
                 'label' => 'Возраст',
                 'value' => function ($data) {
                     return  Yii::$app->formatter->asDate('now', 'yy')
@@ -54,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{view}',
                 /*'buttons' => [
                     'edit' => function ($url, $model, $key) {
-                        return Html::a('edit', ['children/edit', 'id'=>$key]);
+                        return Html::a('edit', ['child/edit', 'id'=>$key]);
                     },
                 ],*/
             ],
