@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="children_index">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= Html::a('Добавить', ['child/edit']); ?>
+    <?= Html::a('Добавить', ['child/edit'], ['class' => 'btn btn-primary']); ?>
 
     <p>
         <?php Pjax::begin(); ?>

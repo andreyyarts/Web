@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php if (!Yii::$app->session->hasFlash('editChild')): ?>
 
-        <p><?= Html::a('Внести изменения', ['child/edit', 'id' => $model->id]); ?></p>
+        <p><?= Html::a('Внести изменения', ['child/edit', 'id' => $model->id], ['class' => 'btn btn-primary']); ?></p>
 
         <?= DetailView::widget([
             'model' => $model,
