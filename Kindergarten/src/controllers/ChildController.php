@@ -7,6 +7,7 @@
  */
 namespace app\controllers;
 
+use app\models\ChildSearch;
 use yii;
 use app\models\ChildForm;
 use app\models\ChildrenForm;
@@ -18,9 +19,11 @@ class ChildController extends Controller
 
     public function actionIndex()
     {
-        $model = new ChildrenForm();
+        $filterModel = new ChildSearch();
+        $dataProvider = $filterModel->search(Yii::$app->request->get());
         return $this->render('index', [
-            'model' => $model,
+            'dataProvider' => $dataProvider,
+            'filterModel' => $filterModel,
         ]);
     }
 

@@ -9,7 +9,6 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use yii\db\Query;
 
 class ChildrenForm extends Model
 {
@@ -20,7 +19,6 @@ class ChildrenForm extends Model
             'key' => 'id',
             'pagination' => [
                 'pageSize' => 20,
-                
             ],
             'sort' => [
                 'attributes' => [ 'id', 'full_name', 'birthday', 'sex' ],

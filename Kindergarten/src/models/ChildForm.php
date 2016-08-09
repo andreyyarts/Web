@@ -15,6 +15,7 @@ class ChildForm extends Model
     public $last_name;
     public $first_name;
     public $middle_name;
+    //public $full_name;
     public $sex;
     public $address;
     public $residential_address;
