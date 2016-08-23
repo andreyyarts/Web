@@ -23,6 +23,7 @@ class ChildForm extends Model
     public $enrollment_date;
     public $outlet_date;
     public $note;
+    public $is_active;
 
     /**
      * ChildForm constructor.

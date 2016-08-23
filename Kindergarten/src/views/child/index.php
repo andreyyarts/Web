@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ChildrenForm */
-/* @var $filterModel app\models\ChildForm */
+/* @var $filterModel app\models\ChildSearch */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $dataProvider yii\data\ActiveDataProvider; */
 
@@ -10,6 +10,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\jui\DatePicker;
+use yii\bootstrap\ActiveForm;
 
 $this->title = 'Дети';
 $this->params['breadcrumbs'][] = $this->title;
@@ -20,26 +21,43 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::begin(); ?>
 
-   <!-- <?php /*$form = ActiveForm::begin([
+    <?php $form = ActiveForm::begin([
         'id' => 'child-form',
         'options' => ['class' => 'form-horizontal'],
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
+            'template' => "{label}\n<div class=\"col-md-3\">{input}</div>\n<div class=\"col-md-8\">{error}</div>",
+            'labelOptions' => ['class' => 'col-md-1 control-label'],
         ]
     ]);
-    */?>
 
-    <?/*= $form->field($filterModel, 'sex')->dropDownList(['м' => 'м', 'ж' => 'ж'])-> */?>
+        $form->layout = /*'inline';*/ 'horizontal';
+    ?>
 
-    --><?php /*ActiveForm::end(); */?>
+    <div class="filters row">
+        <?= $form->field($filterModel, 'is_active')->dropDownList(['' => 'Все', 'Архивные', 'Активные'],
+            [
+                //'class' => 'form-control col-md-6',
+                'onchange' => 'this.form.submit()',
+            ]) ?>
+
+        <?= $form->field($filterModel, 'sex')->dropDownList(['' => 'Все', 'м' => 'м', 'ж' => 'ж'],
+            [
+                //'submit' => '',
+                //'class' => 'form-control col-md-6',
+                'onchange' => 'this.form.submit()',
+            ]) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
 
     <?= Html::a('Добавить', ['child/edit'], ['class' => 'btn btn-primary']); ?>
 
-    <p>        
+    <?php Pjax::end(); ?>
+    <?php Pjax::begin(); ?>
+    <p>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
-            'filterModel' => $filterModel,
+            //'filterModel' => $filterModel,
             'filterPosition' => GridView::FILTER_POS_HEADER,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
@@ -55,15 +73,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => ['date'],
                     'options' => ['width' => '120'],
                     'filter' => DatePicker::widget([
-                            'model' => $filterModel,
-                            'attribute' => 'birthday',
-                        ])
+                        'model' => $filterModel,
+                        'attribute' => 'birthday',
+                        'options' => ['class' => 'form-control']
+                    ])
                 ],
                 [
                     'attribute' => 'sex',
                     'label' => 'Пол',
                     'format' => 'text',
-                    'options' => ['width' => '60'],
+                    'options' => ['width' => '75'],
                     'filter' => ['м' => 'м', 'ж' => 'ж'],
                 ],
                 [

@@ -36,6 +36,7 @@ CREATE TABLE `child` (
   `enrollment_date` date DEFAULT NULL,
   `outlet_date` date DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
+  `is_active` int(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `idx_child_fio` (`last_name`),
   KEY `idx_child_birthday` (`birthday`),

@@ -3,20 +3,19 @@
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\ChildForm */
+/* @var $mainTab string */
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
 use yii\widgets\DetailView;
-use yii\jui\DatePicker;
+use yii\bootstrap\Tabs;
 
 $this->title = 'Ребенок';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="children-view">
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?php if (!Yii::$app->session->hasFlash('editChild')): ?>
 
+        <h1><?= Html::encode($this->title) ?></h1>
         <p><?= Html::a('Внести изменения', ['child/edit', 'id' => $model->id], ['class' => 'btn btn-primary']); ?></p>
 
         <?= DetailView::widget([
@@ -38,41 +37,35 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php else: ?>
 
-        <?php $form = ActiveForm::begin([
-            'id' => 'child-form',
-            'options' => ['class' => 'form-horizontal'],
-            'fieldConfig' => [
-                'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-                'labelOptions' => ['class' => 'col-lg-1 control-label'],
-            ]
+        <?= Tabs::widget([
+            'items' => [
+                [
+                    'label' => 'Ребенок',
+                    'content' => $mainTab,
+                    'active' => true
+                ],
+                [
+                    'label' => 'Родственники',
+                    'content' => 'relativies',
+                    'options' => ['tag' => 'div'],
+                    'headerOptions' => ['class' => 'my-class'],
+                ],
+                /*[
+                    'label' => 'Tab with custom id',
+                    'content' => 'Morbi tincidunt, dui sit amet facilisis feugiat...',
+                    'options' => ['id' => 'my-tab'],
+                ],
+                [
+                    'label' => 'Ajax tab',
+                    'url' => ['child/editMain'],
+                ],*/
+            ],
+            'options' => ['tag' => 'div'],
+            'itemOptions' => ['tag' => 'div'],
+            //'headerOptions' => ['class' => 'my-class'],
+            'clientOptions' => ['collapsible' => false],
         ]);
-        //$form->layout = /*'inline';*/ 'horizontal';
         ?>
-
-<!--        <div class="form-group">-->
-            <?php $lastName = $form->field($model, 'last_name');
-            $lastName->inputTemplate = '';
-            ?>
-            <?= $lastName->textInput(['autofocus' => true]) ?>
-            <?= $form->field($model, 'first_name') ?>
-            <?= $form->field($model, 'middle_name') ?>
-<!--        </div>-->
-
-        <?= $form->field($model, 'enrollment_date')->widget(DatePicker::className()) ?>
-        <?= $form->field($model, 'outlet_date')->widget(DatePicker::className()) ?>
-
-        <?= $form->field($model, 'birthday')->widget(DatePicker::className()) ?>
-        <?= $form->field($model, 'sex')->inline()->radioList(['м' => 'м', 'ж' => 'ж']) ?>
-
-        <?= $form->field($model, 'residential_address') ?>
-        <?= $form->field($model, 'address') ?>
-        <?= $form->field($model, 'note')->textarea(['rows' => 3]) ?>
-
-        <div class="form-group">
-            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'child-button']) ?>
-        </div>
-
-        <?php ActiveForm::end(); ?>
 
     <?php endif; ?>
 </div>
