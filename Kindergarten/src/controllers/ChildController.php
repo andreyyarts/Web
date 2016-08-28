@@ -29,13 +29,16 @@ class ChildController extends Controller
 
     public function actionView($id)
     {
-        Yii::$app->session->removeFlash(self::EDIT_CHILD);
+        //Yii::$app->session->removeFlash(self::EDIT_CHILD);
         $model = new ChildForm();
         $getId = Yii::$app->request->get('id', $id);
         $model->loadData($getId);
 
         return $this->render('view', [
             'model' => $model,
+            'mainTab' => $this->renderPartial('viewMainTab', [
+                'model' => $model,
+            ])
         ]);
     }
 
@@ -53,16 +56,16 @@ class ChildController extends Controller
         if (isset($get['id'])) {
             $model->loadData($get['id']);
         }
-        Yii::$app->session->setFlash(self::EDIT_CHILD);
+        //Yii::$app->session->setFlash(self::EDIT_CHILD);
         return $this->render('view', [
             'model' => $model,
-            'mainTab' => $this->renderPartial('editMain', [
+            'mainTab' => $this->renderPartial('editMainTab', [
                 'model' => $model,
             ])
         ]);
     }
 
-    public function actionEditmain()
+    /*public function actionEditmain()
     {
         $get = Yii::$app->request->get();
         $model = new ChildForm();
@@ -80,5 +83,5 @@ class ChildController extends Controller
         return $this->renderAjax('editMain', [
             'model' => $model,
         ]);
-    }
+    }*/
 }

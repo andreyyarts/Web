@@ -1,7 +1,6 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ChildrenForm */
 /* @var $filterModel app\models\ChildSearch */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $dataProvider yii\data\ActiveDataProvider; */
@@ -23,27 +22,27 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin([
         'id' => 'child-form',
-        'options' => ['class' => 'form-horizontal'],
+        //'options' => ['class' => 'form-horizontal'],
+        'options' => ['class' => 'form-inline'],
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-md-3\">{input}</div>\n<div class=\"col-md-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-md-1 control-label'],
+            'template' => "{label}{input}{error}",
+            'labelOptions' => ['class' => 'control-label horizontal-margin'],
         ]
     ]);
 
-        $form->layout = /*'inline';*/ 'horizontal';
+        //$form->layout = 'inline';// 'horizontal';
     ?>
 
-    <div class="filters row">
+    <div class="row">
         <?= $form->field($filterModel, 'is_active')->dropDownList(['' => 'Все', 'Архивные', 'Активные'],
             [
-                //'class' => 'form-control col-md-6',
+                'class' => 'form-control input-sm',
                 'onchange' => 'this.form.submit()',
             ]) ?>
 
         <?= $form->field($filterModel, 'sex')->dropDownList(['' => 'Все', 'м' => 'м', 'ж' => 'ж'],
             [
-                //'submit' => '',
-                //'class' => 'form-control col-md-6',
+                'class' => 'form-control input-sm',
                 'onchange' => 'this.form.submit()',
             ]) ?>
     </div>

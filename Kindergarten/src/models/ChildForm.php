@@ -7,7 +7,9 @@
  */
 namespace app\models;
 
+use yii;
 use yii\base\Model;
+use yii\db\Query;
 
 class ChildForm extends Model
 {
@@ -15,7 +17,6 @@ class ChildForm extends Model
     public $last_name;
     public $first_name;
     public $middle_name;
-    //public $full_name;
     public $sex;
     public $address;
     public $residential_address;
@@ -23,21 +24,8 @@ class ChildForm extends Model
     public $enrollment_date;
     public $outlet_date;
     public $note;
-    public $is_active;
+    public $is_active = 1;
 
-    /**
-     * ChildForm constructor.
-     * @param $id
-     */
-    /*public function __construct($id)
-    {
-        $childFields = Child::loadById($id);
-        $this->setAttributes($childFields, false);
-        $array = $this->toArray();
-    }*/
-    /*
-     * @param $id
-     */
     public function loadData($id)
     {
         $childFields = Child::loadById($id);
@@ -64,12 +52,6 @@ class ChildForm extends Model
             'outletDate' => 'outlet_date',
             'note',
         ];
-    }
-
-    public function save()
-    {
-        $child = (new Child())->save($this);
-        return $child;
     }
 
     /**
@@ -99,5 +81,55 @@ class ChildForm extends Model
             'residential_address' => 'Адрес проживания',
             'note' => 'Примечание',
         ];
+    }
+
+    public static function tableName()
+    {
+        return 'child';
+    }
+
+    /**
+     * @param $id
+     * @return array|bool
+     */
+    public static function loadById($id)
+    {
+        $child = self::getQuery()->where(['id' => $id])->limit(1)->one();
+        return $child;
+    }
+
+    /*public function save()
+    {
+        $child = (new Child())->save($this);
+        return $child;
+    }*/
+
+    public function save()
+    {
+        $tableName = self::tableName();
+        if (isset($this->id)) {
+            return (new Query())->createCommand()->update($tableName, $this, "id = $this->id")->execute();
+        } else {
+            (new Query())->createCommand()->insert($tableName, $this)->execute();
+            return Yii::$app->db->getLastInsertID();
+        }
+    }
+
+    public static function getQuery()
+    {
+        return (new Query())
+            ->select(['id',
+                'last_name',
+                'first_name',
+                'middle_name',
+                'CONCAT(last_name, \' \', first_name, \' \', middle_name) AS full_name',
+                'sex',
+                'address',
+                'residential_address',
+                'birthday',
+                'enrollment_date',
+                'outlet_date',
+                'note'])
+            ->from(self::tableName());
     }
 }
