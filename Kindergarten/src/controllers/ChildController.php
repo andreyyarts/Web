@@ -65,23 +65,4 @@ class ChildController extends Controller
         ]);
     }
 
-    /*public function actionEditmain()
-    {
-        $get = Yii::$app->request->get();
-        $model = new ChildForm();
-        if (isset($get['id'])) {
-            $model->id = $get['id'];
-        }
-        if ($model->load(Yii::$app->request->post()) && ($childId = $model->save()) > 0) {
-            return $this->actionView($childId);
-        }
-
-        if (isset($get['id'])) {
-            $model->loadData($get['id']);
-        }
-        Yii::$app->session->setFlash(self::EDIT_CHILD);
-        return $this->renderAjax('editMain', [
-            'model' => $model,
-        ]);
-    }*/
 }

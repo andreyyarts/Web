@@ -11,7 +11,7 @@ use yii;
 use yii\base\Object;
 use yii\db\Query;
 
-class Child extends Object
+/*class Child extends Object
 {
     public $id;
     public $last_name;
@@ -31,10 +31,6 @@ class Child extends Object
         return 'child';
     }
 
-    /**
-     * @param $id
-     * @return array|bool
-     */
     public static function loadById($id)
     {
         $child = self::getQuery()->where(['id' => $id])->limit(1)->one();
@@ -69,4 +65,4 @@ class Child extends Object
                 'note'])
             ->from(self::tableName());
     }
-}
+}*/

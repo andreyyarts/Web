@@ -26,7 +26,7 @@ class ChildSearch extends Model
 
     public function search($params)
     {
-        $query = Child::getQuery();
+        $query = (new ChildForm())->getQuery();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'key' => 'id',

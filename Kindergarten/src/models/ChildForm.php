@@ -7,6 +7,7 @@
  */
 namespace app\models;
 
+use app\helpers\Setup;
 use yii;
 use yii\base\Model;
 use yii\db\Query;
@@ -28,7 +29,7 @@ class ChildForm extends Model
 
     public function loadData($id)
     {
-        $childFields = Child::loadById($id);
+        $childFields = $this->loadById($id);
         $this->setAttributes($childFields);
     }
     
@@ -83,7 +84,7 @@ class ChildForm extends Model
         ];
     }
 
-    public static function tableName()
+    public function tableName()
     {
         return 'child';
     }
@@ -92,9 +93,9 @@ class ChildForm extends Model
      * @param $id
      * @return array|bool
      */
-    public static function loadById($id)
+    public function loadById($id)
     {
-        $child = self::getQuery()->where(['id' => $id])->limit(1)->one();
+        $child = $this->getQuery()->where(['id' => $id])->limit(1)->one();
         return $child;
     }
 
@@ -106,7 +107,12 @@ class ChildForm extends Model
 
     public function save()
     {
-        $tableName = self::tableName();
+        $tableName = $this->tableName();
+
+        $this->birthday = Setup::convert($this->birthday);
+        $this->enrollment_date = Setup::convert($this->enrollment_date);
+        $this->outlet_date = Setup::convert($this->outlet_date);
+
         if (isset($this->id)) {
             return (new Query())->createCommand()->update($tableName, $this, "id = $this->id")->execute();
         } else {
@@ -115,7 +121,7 @@ class ChildForm extends Model
         }
     }
 
-    public static function getQuery()
+    public function getQuery()
     {
         return (new Query())
             ->select(['id',
@@ -130,6 +136,6 @@ class ChildForm extends Model
                 'enrollment_date',
                 'outlet_date',
                 'note'])
-            ->from(self::tableName());
+            ->from($this->tableName());
     }
 }
