@@ -10,6 +10,7 @@ namespace app\models;
 use yii;
 use yii\base\Model;
 use yii\db\Query;
+use yii\data\ActiveDataProvider;
 
 class Relative extends Model
 {
@@ -29,6 +30,7 @@ class Relative extends Model
     {
         return [
             [['last_name', 'first_name', 'middle_name', 'child_id', 'degree'], 'required'],
+            [['full_name'], 'safe'],
         ];
     }
 
@@ -64,6 +66,25 @@ class Relative extends Model
         return $child;
     }
 
+    public function search($childId)
+    {
+        $query = $this->getQuery();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'key' => 'id',
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+            'sort' => [
+                'attributes' => ['full_name'],
+            ],
+        ]);
+
+        $query->where(['child_id' => $childId]);
+
+        return $dataProvider;
+    }
+
     public function safeAttributes()
     {
         return $this->attributes();
@@ -86,6 +107,9 @@ class Relative extends Model
         }
     }
 
+    /**
+     * @return Query
+     */
     public function getQuery()
     {
         return (new Query())

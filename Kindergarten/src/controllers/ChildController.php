@@ -8,6 +8,7 @@
 namespace app\controllers;
 
 use app\models\ChildSearch;
+use app\models\Relative;
 use yii;
 use app\models\ChildForm;
 use yii\web\Controller;
@@ -31,14 +32,21 @@ class ChildController extends Controller
     {
         //Yii::$app->session->removeFlash(self::EDIT_CHILD);
         $model = new ChildForm();
-        $getId = Yii::$app->request->get('id', $id);
-        $model->loadData($getId);
+        $childId = Yii::$app->request->get('id', $id);
+        $model->loadData($childId);
+
+        $relative = new Relative();        
+        $relativeDataProvider = $relative->search($childId);
 
         return $this->render('view', [
             'model' => $model,
             'mainTab' => $this->renderPartial('viewMainTab', [
                 'model' => $model,
+            ]),
+            'relativesTab' => $this->renderPartial('relativesTab', [
+                'dataProvider' => $relativeDataProvider
             ])
+
         ]);
     }
 
