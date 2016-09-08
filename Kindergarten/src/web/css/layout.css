@@ -4,3 +4,6 @@
 .vertical-margin{
     margin: 10px 0;
 }
+.ui-widget-content a {
+    color: #fff;
+}

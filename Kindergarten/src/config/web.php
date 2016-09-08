@@ -51,7 +51,10 @@ $config = [
                 '<controller:[\w-]+>s' => '<controller>/index',
 
                 'child/edit/<id:\d+>' => 'child/edit',
-                'PUT <controller:[\w-]+>/<id:\d+>'    => '<controller>/edit',
+                'child/main-tab/<id:\d+>' => 'child/main-tab',
+                'relatives/<childId:\d+>' => 'relative/index',
+                '<controller:[\w-]+>/edit/<id:\d+>'    => '<controller>/edit',
+                //'<controller:[\w-]+>/edit/<id:\d+>'    => '<controller>/update',
                 'DELETE <controller:[\w-]+>/<id:\d+>' => '<controller>/delete',
                 '<controller:[\w-]+>/<id:\d+>'        => '<controller>/view',
             ],

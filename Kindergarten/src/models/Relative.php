@@ -45,7 +45,7 @@ class Relative extends Model
             'middle_name' => 'Отчество',
             'child_id' => 'Ребенок',
             'degree' => 'Степень родства',
-            'phone' => 'телефон',
+            'phone' => 'Телефон',
             'address' => 'Адрес прописки',
         ];
     }

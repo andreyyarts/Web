@@ -6,22 +6,23 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use yii\widgets\DetailView;
+use yii\widgets\Pjax;
 use yii\jui\DatePicker;
 
 ?>
+
 <div class="child-editMainTab">
     <p/>
+
     <?php $form = ActiveForm::begin([
         'id' => 'child-form',
+        'action' => ['child/edit'],
         'options' => ['class' => 'form-horizontal'],
         'fieldConfig' => [
             'template' => "{label}\n<div class=\"col-md-3\">{input}</div>\n<div class=\"col-md-8\">{error}</div>",
             'labelOptions' => ['class' => 'col-md-2 control-label'],
         ]
-    ]);
-    //$form->layout = /*'inline';*/ 'horizontal';
-    ?>
+    ]); ?>
 
     <div class="row">
         <?php $lastName = $form->field($model, 'last_name');
@@ -47,5 +48,5 @@ use yii\jui\DatePicker;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>
+

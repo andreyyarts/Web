@@ -5,19 +5,22 @@
 /* @var $model app\models\ChildForm */
 /* @var $mainTab string */
 /* @var $relativesTab string */
+/* @var $childId int */
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use yii\bootstrap\Tabs;
+use yii\jui\Tabs;
+
+//use yii\bootstrap\Tabs;
 //use kartik\tabs\TabsX;
 use yii\widgets\Pjax;
+
+//use yii\helpers\Url;
 
 $this->title = 'Ребенок';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="children-view">
-
-    <?php Pjax::begin(); ?>
     <?= Tabs::widget([
         /*'enableStickyTabs' => true,
         'stickyTabsOptions' => [
@@ -28,20 +31,26 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Ребенок',
                 'content' => $mainTab,
+                'url' => [Yii::$app->session->hasFlash('editChild') ? '/child/edit-main-tab' : '/child/main-tab', 'id' => $model->id],
                 'active' => true
             ],
             [
                 'label' => 'Родственники',
-                'content' => $relativesTab,
-                'options' => ['tag' => 'div'],
-                'headerOptions' => ['class' => 'my-class'],
+                //'content' => 'rel',//$relativesTab,
+                'url' => ['/relative/index', 'childId' => $model->id],
+                /*'linkOptions' => [
+                    //'data-url' => Url::to(['/relative/index'])
+                    'data-url' => '/relative/index'
+                ]*/
+                //'options' => ['tag' => 'div'],
+                //'headerOptions' => ['class' => 'my-class'],
             ],
         ],
-        'options' => ['tag' => 'div'],
-        'itemOptions' => ['tag' => 'div'],
-        //'headerOptions' => ['class' => 'my-class'],
-        'clientOptions' => ['collapsible' => false],
+        'options' => ['class' => 'myClass'],
+        //nav nav-tabs
+        'itemOptions' => ['class' => 'myClass'],
+        'headerOptions' => ['class' => 'myClass'],
+        //'clientOptions' => ['collapsible' => false],
     ]);
     ?>
-    <?php Pjax::end(); ?>
 </div>
